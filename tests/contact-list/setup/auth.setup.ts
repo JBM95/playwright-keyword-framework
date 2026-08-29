@@ -1,6 +1,7 @@
 import { mkdir } from 'node:fs/promises';
-import { expect, test as setup } from '@playwright/test';
+import { test as setup } from '@playwright/test';
 import { AuthenticationKeywords } from '../../../src/contact-list/keywords/auth.keywords';
+import { ContactListPage } from '../../../src/contact-list/pages/contact-list.page';
 import { environment } from '../../../src/framework/config/environment';
 import { LoginPage } from '../../../src/contact-list/pages/login.page';
 
@@ -22,9 +23,10 @@ setup('authenticate as the Contact List test user', async ({ page }) => {
 
   const loginPage = new LoginPage(page);
   const authenticationKeywords = new AuthenticationKeywords(loginPage);
+  const contactListPage = new ContactListPage(page);
 
   await authenticationKeywords.loginAs(email, password);
-  await expect(page.getByRole('heading', { name: 'Contact List' })).toBeVisible();
+  await contactListPage.waitForLoaded();
 
   await mkdir('playwright/.auth', { recursive: true });
   await page.context().storageState({ path: authFile });
