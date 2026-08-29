@@ -1,4 +1,4 @@
-import type { LoginPage } from '../pages/LoginPage';
+import type { LoginPage } from '../pages/login.page';
 
 export class AuthenticationKeywords {
   constructor(private readonly loginPage: LoginPage) {}

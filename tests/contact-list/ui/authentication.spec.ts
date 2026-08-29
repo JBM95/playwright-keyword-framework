@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { AuthenticationKeywords } from '../../src/projects/contact-list/keywords/AuthenticationKeywords';
-import { LoginPage } from '../../src/projects/contact-list/pages/LoginPage';
+import { AuthenticationKeywords } from '../../../src/contact-list/keywords/auth.keywords';
+import { LoginPage } from '../../../src/contact-list/pages/login.page';
 
 test('shows an error when credentials are invalid', async ({ page }) => {
   const loginPage = new LoginPage(page);

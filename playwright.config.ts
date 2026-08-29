@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { environment } from './src/framework/config/environment';
 
 export default defineConfig({
   testDir: './tests',
@@ -7,7 +8,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: [['html', { open: 'never' }]],
   use: {
-    baseURL: 'https://thinking-tester-contact-list.herokuapp.com/',
+    baseURL: environment.contactListBaseUrl,
     screenshot: 'only-on-failure',
     trace: 'on-first-retry'
   },

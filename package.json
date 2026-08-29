@@ -5,8 +5,7 @@
   "description": "Keyword-driven Playwright and TypeScript test automation framework foundation.",
   "scripts": {
     "test": "playwright test",
-    "test:e2e": "playwright test tests/e2e",
-    "test:api": "playwright test tests/api",
+    "test:e2e": "playwright test tests/contact-list/ui",
     "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
     "report": "playwright show-report",

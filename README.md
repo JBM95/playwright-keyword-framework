@@ -19,26 +19,29 @@ npx playwright install chromium
 ```bash
 npm test              # all tests
 npm run test:e2e      # E2E tests only
-npm run test:api      # API tests only
 npm run test:headed   # run with a visible browser
 npm run test:ui       # open Playwright UI mode
 npm run report        # open the latest HTML report
 ```
 
-## Intended architecture
+## Architecture
 
 ```text
-tests/
-  e2e/        Browser test specifications
-  api/        API test specifications
 src/
-  pages/      Page Objects (to be added)
-  keywords/   Business/domain keyword layer (to be added)
-  api/        API clients (to be added)
-  fixtures/   Shared Playwright fixtures
-  data/       Test data
-  models/     TypeScript domain models
-  utils/      Shared utilities
+  framework/
+    config/
+      environment.ts
+  contact-list/
+    pages/
+      login.page.ts
+    keywords/
+      auth.keywords.ts
+tests/
+  contact-list/
+    ui/
+      authentication.spec.ts
 ```
 
-The Playwright configuration supplies the Contact List application through `baseURL`, so tests and future Page Objects can use relative paths rather than duplicating the URL.
+The test spec calls business/domain keywords, which use page objects to interact with Playwright.
+
+The Contact List base URL is read from `CONTACT_LIST_BASE_URL` when set. Otherwise, the default is `https://thinking-tester-contact-list.herokuapp.com/`. Page objects use relative paths through Playwright's `baseURL`.
