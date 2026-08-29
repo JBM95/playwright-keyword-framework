@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 import { AuthenticationKeywords } from '../../../src/contact-list/keywords/auth.keywords';
 import { LoginPage } from '../../../src/contact-list/pages/login.page';
 
+test.use({ storageState: { cookies: [], origins: [] } });
+
 test('shows an error when credentials are invalid', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const authenticationKeywords = new AuthenticationKeywords(loginPage);

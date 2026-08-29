@@ -38,6 +38,8 @@ src/
       auth.keywords.ts
 tests/
   contact-list/
+    setup/
+      auth.setup.ts
     ui/
       authentication.spec.ts
 ```
@@ -45,3 +47,14 @@ tests/
 The test spec calls business/domain keywords, which use page objects to interact with Playwright.
 
 The Contact List base URL is read from `CONTACT_LIST_BASE_URL` when set. Otherwise, the default is `https://thinking-tester-contact-list.herokuapp.com/`. Page objects use relative paths through Playwright's `baseURL`.
+
+Authenticated UI tests require these local environment variables:
+
+```text
+CONTACT_LIST_TEST_USER_EMAIL
+CONTACT_LIST_TEST_USER_PASSWORD
+```
+
+These variables can be stored in the local `.env` file, which is loaded automatically for Playwright runs.
+
+The authentication setup uses these credentials through the real login page and writes the generated browser state to `playwright/.auth/user.json`. The auth state is ignored by Git.
