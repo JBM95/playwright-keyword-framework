@@ -22,4 +22,9 @@ export class LoginPage {
     await this.passwordField.fill(password);
     await this.submitButton.click();
   }
+
+  async getErrorMessage(): Promise<string> {
+    const populatedErrorMessage = this.errorMessage.filter({ hasText: /\S/ });
+    return populatedErrorMessage.innerText();
+  }
 }
