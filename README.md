@@ -28,10 +28,9 @@ npm run report        # open the latest HTML report
 
 ```text
 src/
-  framework/
-    config/
-      environment.ts
   contact-list/
+    config/
+      contact-list.config.ts
     pages/
       login.page.ts
     keywords/
@@ -56,5 +55,6 @@ CONTACT_LIST_TEST_USER_PASSWORD
 ```
 
 These variables can be stored in the local `.env` file, which is loaded automatically for Playwright runs.
+Copy `.env.example` to `.env` and fill in the placeholders; never commit the local `.env` file.
 
 The authentication setup uses these credentials through the real login page and writes the generated browser state to `playwright/.auth/user.json`. The auth state is ignored by Git.
