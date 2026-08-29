@@ -1,0 +1,10 @@
+import { LoginPage } from '../pages/LoginPage';
+
+export class AuthenticationKeywords {
+  constructor(private readonly loginPage: LoginPage) {}
+
+  async loginAs(email: string, password: string): Promise<void> {
+    await this.loginPage.navigate();
+    await this.loginPage.login(email, password);
+  }
+}
