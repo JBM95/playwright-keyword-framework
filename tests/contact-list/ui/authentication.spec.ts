@@ -1,13 +1,12 @@
-import { expect, test } from '@playwright/test';
-import { AuthenticationKeywords } from '../../../src/contact-list/keywords/auth.keywords';
-import { LoginPage } from '../../../src/contact-list/pages/login.page';
+import { expect } from '@playwright/test';
+import { test } from '../fixtures/contact-list.fixture';
 
 test.use({ storageState: { cookies: [], origins: [] } });
 
-test('shows an error when credentials are invalid', async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  const authenticationKeywords = new AuthenticationKeywords(loginPage);
-
+test('shows an error when credentials are invalid', async ({
+  loginPage,
+  authenticationKeywords
+}) => {
   await authenticationKeywords.loginAs(
     'invalid.user@example.test',
     'not-a-real-password'
