@@ -1,4 +1,7 @@
 import { test as base } from '@playwright/test';
+import { AuthApiClient } from '../../../src/contact-list/api/auth.client';
+import { ContactsApiClient } from '../../../src/contact-list/api/contacts.client';
+import { contactListConfig } from '../../../src/contact-list/config/contact-list.config';
 import { AuthenticationKeywords } from '../../../src/contact-list/keywords/auth.keywords';
 import { ContactManagementKeywords } from '../../../src/contact-list/keywords/contact.keywords';
 import { AddContactPage } from '../../../src/contact-list/pages/add-contact.page';
@@ -13,6 +16,7 @@ type ContactListFixtures = {
   contactListPage: ContactListPage;
   contactDetailsPage: ContactDetailsPage;
   contactKeywords: ContactManagementKeywords;
+  contactsApi: ContactsApiClient;
 };
 
 export const test = base.extend<ContactListFixtures>({
@@ -43,5 +47,12 @@ export const test = base.extend<ContactListFixtures>({
         editContactPage
       )
     );
+  },
+  contactsApi: async ({ request }, use) => {
+    const { email, password } = contactListConfig.testUser;
+    const authApi = new AuthApiClient(request);
+    const token = await authApi.login(email, password);
+
+    await use(new ContactsApiClient(request, token));
   }
 });
