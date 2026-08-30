@@ -8,21 +8,28 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: [['html', { open: 'never' }]],
   use: {
-    baseURL: contactListConfig.baseUrl,
     screenshot: 'only-on-failure',
     trace: 'on-first-retry'
   },
   projects: [
     {
-      name: 'setup',
-      testMatch: /.*\.setup\.ts/
+      name: 'contact-list-setup',
+      testDir: './tests/contact-list/setup',
+      testMatch: /.*\.setup\.ts/,
+      use: {
+        baseURL: contactListConfig.baseUrl
+      }
     },
     {
-      name: 'chromium',
-      dependencies: ['setup'],
+      name: 'contact-list-chromium',
+      testDir: './tests/contact-list',
+      testIgnore: /[\\/]setup[\\/]/,
+      dependencies: ['contact-list-setup'],
+      // The Contact List demo uses one shared account, whose API rejects concurrent logins.
       workers: 1,
       use: {
         ...devices['Desktop Chrome'],
+        baseURL: contactListConfig.baseUrl,
         storageState: 'playwright/.auth/user.json'
       }
     }
