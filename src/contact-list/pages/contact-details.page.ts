@@ -36,6 +36,7 @@ export class ContactDetailsPage {
   }
 
   async waitForLoaded(): Promise<void> {
+    await this.page.waitForLoadState('domcontentloaded');
     await expect(this.contactDetailsHeading).toBeVisible();
   }
 
@@ -48,10 +49,8 @@ export class ContactDetailsPage {
   }
 
   async deleteContact(): Promise<void> {
-    const dialogPromise = this.page.waitForEvent('dialog');
-
+    this.page.once('dialog', (dialog) => dialog.accept());
     await this.deleteContactButton.click();
-    await (await dialogPromise).accept();
   }
 
   async returnToContactList(): Promise<void> {

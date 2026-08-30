@@ -44,6 +44,7 @@ export class EditContactPage {
   }
 
   async waitForLoaded(): Promise<void> {
+    await this.page.waitForLoadState('domcontentloaded');
     await expect(this.editContactHeading).toBeVisible();
   }
 

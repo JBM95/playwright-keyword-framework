@@ -20,6 +20,11 @@ export class ContactListPage {
     await expect(this.contactListHeading).toBeVisible();
   }
 
+  async navigate(): Promise<void> {
+    await this.page.goto('/contactList');
+    await this.waitForLoaded();
+  }
+
   async openAddContact(): Promise<void> {
     await this.addContactButton.click();
   }

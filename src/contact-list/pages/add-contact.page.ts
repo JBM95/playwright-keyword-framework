@@ -44,6 +44,7 @@ export class AddContactPage {
   }
 
   async waitForLoaded(): Promise<void> {
+    await this.page.waitForLoadState('domcontentloaded');
     await expect(this.page).toHaveURL(/\/addContact/);
     await expect(this.addContactHeading).toBeVisible();
   }

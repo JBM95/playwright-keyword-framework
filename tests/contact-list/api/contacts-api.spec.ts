@@ -4,8 +4,6 @@ import { type ContactResponse } from '../../../src/contact-list/models/contact-r
 import { createContact } from '../data/contact.factory';
 import { test } from '../fixtures/contact-list.fixture';
 
-test.describe.configure({ mode: 'serial' });
-
 test('creates and retrieves a persisted contact', async ({ contactsApi }) => {
   const contact = createContact();
   let contactId: string | undefined;
