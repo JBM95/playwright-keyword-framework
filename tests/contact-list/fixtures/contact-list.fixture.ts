@@ -9,13 +9,16 @@ import { ContactDetailsPage } from '../../../src/contact-list/pages/contact-deta
 import { ContactListPage } from '../../../src/contact-list/pages/contact-list.page';
 import { EditContactPage } from '../../../src/contact-list/pages/edit-contact.page';
 import { LoginPage } from '../../../src/contact-list/pages/login.page';
+import { SignUpPage } from '../../../src/contact-list/pages/sign-up.page';
 
 type ContactListFixtures = {
   loginPage: LoginPage;
+  signUpPage: SignUpPage;
   authenticationKeywords: AuthenticationKeywords;
   contactListPage: ContactListPage;
   contactDetailsPage: ContactDetailsPage;
   contactKeywords: ContactManagementKeywords;
+  authApi: AuthApiClient;
   contactsApi: ContactsApiClient;
 };
 
@@ -23,8 +26,16 @@ export const test = base.extend<ContactListFixtures>({
   loginPage: async ({ page }, use) => {
     await use(new LoginPage(page));
   },
-  authenticationKeywords: async ({ loginPage }, use) => {
-    await use(new AuthenticationKeywords(loginPage));
+  signUpPage: async ({ page }, use) => {
+    await use(new SignUpPage(page));
+  },
+  authenticationKeywords: async (
+    { loginPage, signUpPage, contactListPage },
+    use
+  ) => {
+    await use(
+      new AuthenticationKeywords(loginPage, signUpPage, contactListPage)
+    );
   },
   contactListPage: async ({ page }, use) => {
     await use(new ContactListPage(page));
@@ -48,9 +59,11 @@ export const test = base.extend<ContactListFixtures>({
       )
     );
   },
-  contactsApi: async ({ request }, use) => {
+  authApi: async ({ request }, use) => {
+    await use(new AuthApiClient(request));
+  },
+  contactsApi: async ({ request, authApi }, use) => {
     const { email, password } = contactListConfig.testUser;
-    const authApi = new AuthApiClient(request);
     const token = await authApi.login(email, password);
 
     await use(new ContactsApiClient(request, token));
