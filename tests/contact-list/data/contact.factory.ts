@@ -5,7 +5,7 @@ let contactSequence = 0;
 export function createContact(
   overrides: Partial<ContactData> = {}
 ): ContactData {
-  const uniqueSuffix = `${Date.now()}-${contactSequence++}`;
+  const uniqueSuffix = `${Date.now().toString(36)}-${contactSequence++}`;
 
   return {
     firstName: 'Test',
