@@ -6,6 +6,7 @@ export class ContactDetailsPage {
   private readonly editContactButton: Locator;
   private readonly deleteContactButton: Locator;
   private readonly returnToContactListButton: Locator;
+  private readonly contactFields: Record<keyof ContactData, Locator>;
 
   constructor(private readonly page: Page) {
     this.contactDetailsHeading = page.getByRole('heading', {
@@ -19,32 +20,27 @@ export class ContactDetailsPage {
     this.returnToContactListButton = page.getByRole('button', {
       name: 'Return to Contact List'
     });
+    this.contactFields = {
+      firstName: page.locator('#firstName'),
+      lastName: page.locator('#lastName'),
+      birthdate: page.locator('#birthdate'),
+      email: page.locator('#email'),
+      phone: page.locator('#phone'),
+      street1: page.locator('#street1'),
+      street2: page.locator('#street2'),
+      city: page.locator('#city'),
+      stateProvince: page.locator('#stateProvince'),
+      postalCode: page.locator('#postalCode'),
+      country: page.locator('#country')
+    };
   }
 
   async waitForLoaded(): Promise<void> {
     await expect(this.contactDetailsHeading).toBeVisible();
   }
 
-  async isDisplaying(contact: ContactData): Promise<boolean> {
-    const values = [
-      ['First Name:', contact.firstName],
-      ['Last Name:', contact.lastName],
-      ['Date of Birth:', contact.birthdate],
-      ['Email:', contact.email],
-      ['Phone:', contact.phone],
-      ['Street Address 1:', contact.street1],
-      ['Street Address 2:', contact.street2],
-      ['City:', contact.city],
-      ['State or Province:', contact.stateProvince],
-      ['Postal Code:', contact.postalCode],
-      ['Country:', contact.country]
-    ] as const;
-
-    const detailVisibility = await Promise.all(
-      values.map(([label, value]) => this.detailValue(label, value).isVisible())
-    );
-
-    return detailVisibility.every(Boolean);
+  contactField(field: keyof ContactData): Locator {
+    return this.contactFields[field];
   }
 
   async enterEditMode(): Promise<void> {
@@ -60,12 +56,5 @@ export class ContactDetailsPage {
 
   async returnToContactList(): Promise<void> {
     await this.returnToContactListButton.click();
-  }
-
-  private detailValue(label: string, value: string): Locator {
-    return this.page
-      .locator('p')
-      .filter({ hasText: label })
-      .getByText(value, { exact: true });
   }
 }

@@ -28,11 +28,7 @@ export class ContactListPage {
     await this.contactCell(contact).click();
   }
 
-  async isContactPresent(contact: ContactData): Promise<boolean> {
-    return this.contactCell(contact).isVisible();
-  }
-
-  private contactCell(contact: ContactData): Locator {
+  contactCell(contact: ContactData): Locator {
     return this.page.getByRole('cell', {
       name: `${contact.firstName} ${contact.lastName}`,
       exact: true

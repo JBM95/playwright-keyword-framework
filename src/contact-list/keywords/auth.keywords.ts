@@ -7,8 +7,4 @@ export class AuthenticationKeywords {
     await this.loginPage.navigate();
     await this.loginPage.login(email, password);
   }
-
-  async getLoginFailureMessage(): Promise<string> {
-    return this.loginPage.getErrorMessage();
-  }
 }

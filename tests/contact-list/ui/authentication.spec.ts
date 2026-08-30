@@ -13,8 +13,7 @@ test('shows an error when credentials are invalid', async ({ page }) => {
     'not-a-real-password'
   );
 
-  const loginFailureMessage =
-    await authenticationKeywords.getLoginFailureMessage();
-
-  expect(loginFailureMessage).toBe('Incorrect username or password');
+  await expect(loginPage.errorMessage).toHaveText(
+    'Incorrect username or password'
+  );
 });

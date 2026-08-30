@@ -47,12 +47,4 @@ export class ContactManagementKeywords {
     await this.contactDetailsPage.returnToContactList();
     await this.contactListPage.waitForLoaded();
   }
-
-  async isContactPresent(contact: ContactData): Promise<boolean> {
-    return this.contactListPage.isContactPresent(contact);
-  }
-
-  async isContactDetailsDisplayed(contact: ContactData): Promise<boolean> {
-    return this.contactDetailsPage.isDisplaying(contact);
-  }
 }
