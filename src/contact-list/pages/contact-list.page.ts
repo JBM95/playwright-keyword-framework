@@ -2,7 +2,7 @@ import { expect, type Locator, type Page } from '@playwright/test';
 import type { ContactData } from '../models/contact';
 
 export class ContactListPage {
-  private readonly contactListHeading: Locator;
+  readonly contactListHeading: Locator;
   private readonly addContactButton: Locator;
 
   constructor(private readonly page: Page) {
