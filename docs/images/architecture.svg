@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">Playwright keyword framework architecture</title>
+  <desc id="desc">Architecture showing generic Playwright execution, Contact List product composition, UI and API flows, and a future product onboarding beside Contact List.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
+      .heading { font: 700 21px Arial, sans-serif; fill: #0f172a; }
+      .label { font: 600 17px Arial, sans-serif; fill: #0f172a; }
+      .body { font: 15px Arial, sans-serif; fill: #334155; }
+      .small { font: 14px Arial, sans-serif; fill: #475569; }
+      .box { stroke-width: 2; rx: 14; ry: 14; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .dash { stroke: #64748b; stroke-width: 2; stroke-dasharray: 8 7; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="980" fill="#ffffff"/>
+  <text x="800" y="48" text-anchor="middle" class="title">Playwright Keyword Framework — Architecture &amp; Portability Seam</text>
+
+  <rect x="510" y="82" width="580" height="92" class="box" fill="#f8fafc" stroke="#475569"/>
+  <text x="800" y="118" text-anchor="middle" class="heading">playwright.config.ts</text>
+  <text x="800" y="148" text-anchor="middle" class="body">Composition root: generic execution settings + product project composition</text>
+
+  <rect x="70" y="230" width="390" height="300" class="box" fill="#f8fafc" stroke="#64748b"/>
+  <text x="265" y="270" text-anchor="middle" class="heading">Reusable framework capability</text>
+  <text x="105" y="312" class="body">• Playwright Test + TypeScript</text>
+  <text x="105" y="345" class="body">• retries / forbidOnly</text>
+  <text x="105" y="378" class="body">• HTML reporting</text>
+  <text x="105" y="411" class="body">• screenshots / traces</text>
+  <text x="105" y="444" class="body">• keyword, POM, fixture conventions</text>
+  <text x="105" y="477" class="body">• locator / data / independence rules</text>
+  <text x="105" y="510" class="small">Deliberately small: no fake generic base layers</text>
+
+  <rect x="505" y="215" width="690" height="620" class="box" fill="#eff6ff" stroke="#2563eb"/>
+  <text x="850" y="255" text-anchor="middle" class="heading">Thinking Tester Contact List</text>
+  <text x="850" y="284" text-anchor="middle" class="body">Demonstration product / consumer</text>
+
+  <rect x="545" y="320" width="290" height="450" class="box" fill="#ffffff" stroke="#60a5fa"/>
+  <text x="690" y="355" text-anchor="middle" class="heading">UI flow</text>
+
+  <rect x="585" y="390" width="210" height="52" class="box" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="690" y="423" text-anchor="middle" class="label">Test Spec</text>
+  <line x1="690" y1="442" x2="690" y2="478" class="arrow"/>
+  <rect x="585" y="480" width="210" height="52" class="box" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="690" y="513" text-anchor="middle" class="label">Domain Keywords</text>
+  <line x1="690" y1="532" x2="690" y2="568" class="arrow"/>
+  <rect x="585" y="570" width="210" height="52" class="box" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="690" y="603" text-anchor="middle" class="label">Page Objects</text>
+  <line x1="690" y1="622" x2="690" y2="658" class="arrow"/>
+  <rect x="585" y="660" width="210" height="52" class="box" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="690" y="693" text-anchor="middle" class="label">Playwright</text>
+  <line x1="690" y1="712" x2="690" y2="748" class="arrow"/>
+  <text x="690" y="766" text-anchor="middle" class="small">Browser / Application</text>
+
+  <rect x="865" y="320" width="290" height="450" class="box" fill="#ffffff" stroke="#60a5fa"/>
+  <text x="1010" y="355" text-anchor="middle" class="heading">API flow</text>
+
+  <rect x="905" y="410" width="210" height="52" class="box" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="1010" y="443" text-anchor="middle" class="label">Test Spec</text>
+  <line x1="1010" y1="462" x2="1010" y2="508" class="arrow"/>
+  <rect x="905" y="510" width="210" height="52" class="box" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="1010" y="543" text-anchor="middle" class="label">Domain API Client</text>
+  <line x1="1010" y1="562" x2="1010" y2="608" class="arrow"/>
+  <rect x="905" y="610" width="210" height="52" class="box" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="1010" y="643" text-anchor="middle" class="label">APIRequestContext</text>
+  <line x1="1010" y1="662" x2="1010" y2="708" class="arrow"/>
+  <text x="1010" y="735" text-anchor="middle" class="small">Authenticated persisted REST API</text>
+
+  <rect x="1240" y="230" width="290" height="300" class="box" fill="#f0fdf4" stroke="#16a34a"/>
+  <text x="1385" y="270" text-anchor="middle" class="heading">Future product</text>
+  <text x="1280" y="315" class="body">src/new-product/</text>
+  <text x="1280" y="348" class="body">tests/new-product/</text>
+  <text x="1280" y="398" class="body">Own config / pages / keywords</text>
+  <text x="1280" y="431" class="body">Own API / fixtures / data</text>
+  <text x="1280" y="464" class="body">Own worker / auth policy</text>
+  <text x="1280" y="507" class="small">No Contact List code changes required</text>
+
+  <line x1="680" y1="174" x2="355" y2="230" class="arrow"/>
+  <line x1="800" y1="174" x2="800" y2="215" class="arrow"/>
+  <line x1="920" y1="174" x2="1325" y2="230" class="arrow"/>
+
+  <rect x="505" y="860" width="690" height="80" class="box" fill="#fff7ed" stroke="#ea580c"/>
+  <text x="850" y="892" text-anchor="middle" class="heading">Portability seam</text>
+  <text x="850" y="920" text-anchor="middle" class="body">Product behaviour stays product-specific; reusable capability stays independent of Contact List.</text>
+
+  <line x1="460" y1="515" x2="505" y2="515" class="dash"/>
+  <line x1="1195" y1="515" x2="1240" y2="515" class="dash"/>
+</svg>
