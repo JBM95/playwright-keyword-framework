@@ -35,7 +35,11 @@ playwright.config.ts → Product Projects → Product Config → Environment / S
 
 `workers: 1` is a Contact List demonstration constraint caused by the shared external test account; it is not a framework-wide concurrency rule.
 
-For the full reasoning, portability seam, locator policy, authentication strategy, CI security model, and deliberate exclusions, see [`docs/design.md`](docs/design.md). The editable architecture source is [`docs/architecture.drawio`](docs/architecture.drawio).
+## Documentation
+
+**New to the framework? Start with the [handover guide](docs/README.md).** It links to the short guides for getting started, adding a test, and troubleshooting.
+
+For the technical reasoning behind the architecture, portability seam, locator policy, authentication strategy, CI security model, and deliberate exclusions, see [`docs/design.md`](docs/design.md). The editable architecture source is [`docs/architecture.drawio`](docs/architecture.drawio).
 
 ## Repository structure
 
@@ -57,6 +61,10 @@ tests/
     └── ui/
 
 docs/
+├── README.md
+├── getting-started.md
+├── adding-a-test.md
+├── troubleshooting.md
 ├── architecture.drawio
 ├── design.md
 └── images/
@@ -142,8 +150,8 @@ GitHub Actions runs on pushes and pull requests targeting `master`.
 
 Verified CI evidence:
 
-- [Green GitHub Actions run #4](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33308472751)
-- [Playwright HTML report artifact](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33308472751/artifacts/9731234694)
+- [Green GitHub Actions run #5](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33308629603)
+- [Playwright HTML report artifact](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33308629603/artifacts/9731281164)
 
 ## Extending the framework
 
@@ -158,4 +166,4 @@ The new product owns its own configuration, models, pages, keywords, API clients
 
 Shared framework code should be extracted only when two or more real products duplicate the same product-agnostic capability and extraction clearly reduces maintenance or onboarding cost.
 
-See [`docs/design.md`](docs/design.md) for the detailed design rationale and onboarding model.
+See the [handover guide](docs/README.md) for practical extension guidance and [`docs/design.md`](docs/design.md) for the detailed design rationale.
