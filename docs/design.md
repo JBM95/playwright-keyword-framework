@@ -287,7 +287,7 @@ Independence and parallelism are different concerns.
 The Contact List demonstration uses a configured shared account, and concurrent authentication for that account has proved unreliable against the external SUT. Therefore:
 
 ```ts
-workers: 1
+workers: 1;
 ```
 
 is scoped only to `contact-list-chromium`.

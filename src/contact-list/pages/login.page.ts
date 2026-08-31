@@ -1,4 +1,4 @@
-import type { Locator, Page } from '@playwright/test';
+import type { Locator, Page } from "@playwright/test";
 
 export class LoginPage {
   readonly emailField: Locator;
@@ -8,15 +8,15 @@ export class LoginPage {
   readonly errorMessage: Locator;
 
   constructor(private readonly page: Page) {
-    this.emailField = page.getByPlaceholder('Email');
-    this.passwordField = page.getByPlaceholder('Password');
-    this.submitButton = page.getByRole('button', { name: 'Submit' });
-    this.signUpButton = page.getByRole('button', { name: 'Sign up' });
-    this.errorMessage = page.locator('#error');
+    this.emailField = page.getByPlaceholder("Email");
+    this.passwordField = page.getByPlaceholder("Password");
+    this.submitButton = page.getByRole("button", { name: "Submit" });
+    this.signUpButton = page.getByRole("button", { name: "Sign up" });
+    this.errorMessage = page.locator("#error");
   }
 
   async navigate(): Promise<void> {
-    await this.page.goto('/');
+    await this.page.goto("/");
   }
 
   async login(email: string, password: string): Promise<void> {

@@ -1,4 +1,4 @@
-import type { ContactData } from './contact';
+import type { ContactData } from "./contact";
 
 export interface ContactResponse extends ContactData {
   _id: string;

@@ -30,9 +30,9 @@ Use the typed factory in `tests/contact-list/data/contact.factory.ts`:
 const contact = createContact();
 
 const updatedContact = createContact({
-  firstName: 'Updated',
-  lastName: 'Updated Contact',
-  city: 'Johannesburg'
+  firstName: "Updated",
+  lastName: "Updated Contact",
+  city: "Johannesburg",
 });
 ```
 
@@ -147,10 +147,10 @@ Do not create pages simply because the application contains another route.
 A keyword should describe product language such as:
 
 ```ts
-loginAs()
-registerUser()
-updateContact()
-deleteContact()
+loginAs();
+registerUser();
+updateContact();
+deleteContact();
 ```
 
 Low-level actions such as `clickButton()` or `fillTextBox()` belong in page objects, not the keyword layer.

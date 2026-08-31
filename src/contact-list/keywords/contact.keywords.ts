@@ -1,15 +1,15 @@
-import type { ContactData } from '../models/contact';
-import type { AddContactPage } from '../pages/add-contact.page';
-import type { ContactDetailsPage } from '../pages/contact-details.page';
-import type { ContactListPage } from '../pages/contact-list.page';
-import type { EditContactPage } from '../pages/edit-contact.page';
+import type { ContactData } from "../models/contact";
+import type { AddContactPage } from "../pages/add-contact.page";
+import type { ContactDetailsPage } from "../pages/contact-details.page";
+import type { ContactListPage } from "../pages/contact-list.page";
+import type { EditContactPage } from "../pages/edit-contact.page";
 
 export class ContactManagementKeywords {
   constructor(
     private readonly contactListPage: ContactListPage,
     private readonly addContactPage: AddContactPage,
     private readonly contactDetailsPage: ContactDetailsPage,
-    private readonly editContactPage: EditContactPage
+    private readonly editContactPage: EditContactPage,
   ) {}
 
   async addContact(contact: ContactData): Promise<void> {
@@ -27,7 +27,7 @@ export class ContactManagementKeywords {
 
   async updateContact(
     existingContact: ContactData,
-    updatedContact: ContactData
+    updatedContact: ContactData,
   ): Promise<void> {
     await this.openContact(existingContact);
     await this.contactDetailsPage.enterEditMode();

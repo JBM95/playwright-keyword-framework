@@ -20,18 +20,18 @@ The test spec owns scenario intent and final assertions. Keywords express reusab
 
 ## Where does my code go?
 
-| I need to... | Put it here |
-|---|---|
-| Describe a behaviour and assert its outcome | `tests/<product>/ui` or `tests/<product>/api` |
-| Add a browser interaction or locator | page object |
-| Add a reusable business/domain action | keyword |
-| Add an HTTP operation | API client |
-| Represent product data | model |
-| Generate scenario data | typed factory |
-| Wire objects into tests | product fixture |
-| Change Contact List configuration | product config |
-| Change Playwright execution/reporting/projects | `playwright.config.ts` |
-| Add another product | new `src/<product>/` and `tests/<product>/` folders |
+| I need to...                                   | Put it here                                         |
+| ---------------------------------------------- | --------------------------------------------------- |
+| Describe a behaviour and assert its outcome    | `tests/<product>/ui` or `tests/<product>/api`       |
+| Add a browser interaction or locator           | page object                                         |
+| Add a reusable business/domain action          | keyword                                             |
+| Add an HTTP operation                          | API client                                          |
+| Represent product data                         | model                                               |
+| Generate scenario data                         | typed factory                                       |
+| Wire objects into tests                        | product fixture                                     |
+| Change Contact List configuration              | product config                                      |
+| Change Playwright execution/reporting/projects | `playwright.config.ts`                              |
+| Add another product                            | new `src/<product>/` and `tests/<product>/` folders |
 
 ## Read these when you need them
 

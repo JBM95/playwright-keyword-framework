@@ -1,14 +1,14 @@
-import { expect } from '@playwright/test';
-import type { ContactData } from '../../../src/contact-list/models/contact';
-import type { ContactResponse } from '../../../src/contact-list/models/contact-response';
-import { createContact } from '../data/contact.factory';
-import { test } from '../fixtures/contact-list.fixture';
+import { expect } from "@playwright/test";
+import type { ContactData } from "../../../src/contact-list/models/contact";
+import type { ContactResponse } from "../../../src/contact-list/models/contact-response";
+import { createContact } from "../data/contact.factory";
+import { test } from "../fixtures/contact-list.fixture";
 
-test('adds a contact and displays saved details', async ({
+test("adds a contact and displays saved details", async ({
   contactDetailsPage,
   contactKeywords,
   contactListPage,
-  contactsApi
+  contactsApi,
 }) => {
   const contact = createContact();
 
@@ -22,7 +22,7 @@ test('adds a contact and displays saved details', async ({
 
     for (const [field, value] of Object.entries(contact) as [
       keyof ContactData,
-      string
+      string,
     ][]) {
       await expect(contactDetailsPage.contactField(field)).toHaveText(value);
     }
@@ -32,7 +32,7 @@ test('adds a contact and displays saved details', async ({
     if (contactsResponse.ok()) {
       const contacts = (await contactsResponse.json()) as ContactResponse[];
       const createdContact = contacts.find(
-        (savedContact) => savedContact.email === contact.email
+        (savedContact) => savedContact.email === contact.email,
       );
 
       if (createdContact) {
@@ -42,17 +42,17 @@ test('adds a contact and displays saved details', async ({
   }
 });
 
-test('edits an existing contact', async ({
+test("edits an existing contact", async ({
   contactDetailsPage,
   contactKeywords,
   contactListPage,
-  contactsApi
+  contactsApi,
 }) => {
   const contact = createContact();
   const updatedContact = createContact({
-    firstName: 'Updated',
-    lastName: 'Updated Contact',
-    city: 'Johannesburg'
+    firstName: "Updated",
+    lastName: "Updated Contact",
+    city: "Johannesburg",
   });
   let contactId: string | undefined;
 
@@ -69,7 +69,7 @@ test('edits an existing contact', async ({
 
     for (const [field, value] of Object.entries(updatedContact) as [
       keyof ContactData,
-      string
+      string,
     ][]) {
       await expect(contactDetailsPage.contactField(field)).toHaveText(value);
     }
@@ -80,10 +80,10 @@ test('edits an existing contact', async ({
   }
 });
 
-test('deletes an existing contact', async ({
+test("deletes an existing contact", async ({
   contactKeywords,
   contactListPage,
-  contactsApi
+  contactsApi,
 }) => {
   const contact = createContact();
   let contactId: string | undefined;

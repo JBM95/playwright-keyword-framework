@@ -76,7 +76,7 @@ Do not patch individual specs with duplicate selectors.
 Do not add:
 
 ```ts
-waitForTimeout()
+waitForTimeout();
 ```
 
 Wait for meaningful application state instead: a web-first assertion, expected URL, visible heading, page readiness, or expected element state.
@@ -129,15 +129,15 @@ CI retries failed tests and captures a trace on the first retry. Use the trace t
 
 Use this rule:
 
-| Problem | First place to look |
-|---|---|
-| Wrong scenario expectation | test spec |
-| Business flow is wrong | keyword |
-| Locator/browser interaction is wrong | page object |
-| Request/endpoint/auth header is wrong | API client |
-| Generated values are invalid/colliding | factory |
-| Credentials/base URL are wrong | product config / environment |
-| Object construction is missing | product fixture |
-| Project/retry/reporting behaviour is wrong | `playwright.config.ts` |
+| Problem                                    | First place to look          |
+| ------------------------------------------ | ---------------------------- |
+| Wrong scenario expectation                 | test spec                    |
+| Business flow is wrong                     | keyword                      |
+| Locator/browser interaction is wrong       | page object                  |
+| Request/endpoint/auth header is wrong      | API client                   |
+| Generated values are invalid/colliding     | factory                      |
+| Credentials/base URL are wrong             | product config / environment |
+| Object construction is missing             | product fixture              |
+| Project/retry/reporting behaviour is wrong | `playwright.config.ts`       |
 
 Fix the narrowest responsible layer and follow an existing nearby example where possible.

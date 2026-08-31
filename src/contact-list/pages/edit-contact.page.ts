@@ -1,5 +1,5 @@
-import { expect, type Locator, type Page } from '@playwright/test';
-import type { ContactData } from '../models/contact';
+import { expect, type Locator, type Page } from "@playwright/test";
+import type { ContactData } from "../models/contact";
 
 export class EditContactPage {
   private readonly editContactHeading: Locator;
@@ -18,33 +18,33 @@ export class EditContactPage {
   private readonly cancelButton: Locator;
 
   constructor(private readonly page: Page) {
-    this.editContactHeading = page.getByRole('heading', {
-      name: 'Edit Contact',
-      exact: true
+    this.editContactHeading = page.getByRole("heading", {
+      name: "Edit Contact",
+      exact: true,
     });
-    this.firstNameField = page.getByRole('textbox', { name: 'First Name:' });
-    this.lastNameField = page.getByRole('textbox', { name: 'Last Name:' });
-    this.birthdateField = page.getByRole('textbox', { name: 'Date of Birth:' });
-    this.emailField = page.getByRole('textbox', { name: 'Email:' });
-    this.phoneField = page.getByRole('textbox', { name: 'Phone:' });
-    this.street1Field = page.getByRole('textbox', {
-      name: 'Street Address 1:'
+    this.firstNameField = page.getByRole("textbox", { name: "First Name:" });
+    this.lastNameField = page.getByRole("textbox", { name: "Last Name:" });
+    this.birthdateField = page.getByRole("textbox", { name: "Date of Birth:" });
+    this.emailField = page.getByRole("textbox", { name: "Email:" });
+    this.phoneField = page.getByRole("textbox", { name: "Phone:" });
+    this.street1Field = page.getByRole("textbox", {
+      name: "Street Address 1:",
     });
-    this.street2Field = page.getByRole('textbox', {
-      name: 'Street Address 2:'
+    this.street2Field = page.getByRole("textbox", {
+      name: "Street Address 2:",
     });
-    this.cityField = page.getByRole('textbox', { name: 'City:' });
-    this.stateProvinceField = page.getByRole('textbox', {
-      name: 'State or Province:'
+    this.cityField = page.getByRole("textbox", { name: "City:" });
+    this.stateProvinceField = page.getByRole("textbox", {
+      name: "State or Province:",
     });
-    this.postalCodeField = page.getByRole('textbox', { name: 'Postal Code:' });
-    this.countryField = page.getByRole('textbox', { name: 'Country:' });
-    this.submitButton = page.getByRole('button', { name: 'Submit' });
-    this.cancelButton = page.getByRole('button', { name: 'Cancel' });
+    this.postalCodeField = page.getByRole("textbox", { name: "Postal Code:" });
+    this.countryField = page.getByRole("textbox", { name: "Country:" });
+    this.submitButton = page.getByRole("button", { name: "Submit" });
+    this.cancelButton = page.getByRole("button", { name: "Cancel" });
   }
 
   async waitForLoaded(): Promise<void> {
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState("domcontentloaded");
     await expect(this.editContactHeading).toBeVisible();
   }
 

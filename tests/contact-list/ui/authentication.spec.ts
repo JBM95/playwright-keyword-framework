@@ -1,16 +1,16 @@
-import { expect } from '@playwright/test';
-import { UsersApiClient } from '../../../src/contact-list/api/users.client';
-import { contactListConfig } from '../../../src/contact-list/config/contact-list.config';
-import { createTestUser } from '../data/user.factory';
-import { test } from '../fixtures/contact-list.fixture';
+import { expect } from "@playwright/test";
+import { UsersApiClient } from "../../../src/contact-list/api/users.client";
+import { contactListConfig } from "../../../src/contact-list/config/contact-list.config";
+import { createTestUser } from "../data/user.factory";
+import { test } from "../fixtures/contact-list.fixture";
 
 test.use({ storageState: { cookies: [], origins: [] } });
 
-test('registers a new user successfully', async ({
+test("registers a new user successfully", async ({
   authApi,
   authenticationKeywords,
   contactListPage,
-  request
+  request,
 }) => {
   const user = createTestUser();
   let registrationCompleted = false;
@@ -31,9 +31,9 @@ test('registers a new user successfully', async ({
   }
 });
 
-test('logs in with valid credentials', async ({
+test("logs in with valid credentials", async ({
   authenticationKeywords,
-  contactListPage
+  contactListPage,
 }) => {
   const { email, password } = contactListConfig.testUser;
 
@@ -42,16 +42,16 @@ test('logs in with valid credentials', async ({
   await expect(contactListPage.contactListHeading).toBeVisible();
 });
 
-test('rejects invalid credentials', async ({
+test("rejects invalid credentials", async ({
   loginPage,
-  authenticationKeywords
+  authenticationKeywords,
 }) => {
   await authenticationKeywords.loginAs(
-    'invalid.user@example.test',
-    'not-a-real-password'
+    "invalid.user@example.test",
+    "not-a-real-password",
   );
 
   await expect(loginPage.errorMessage).toHaveText(
-    'Incorrect username or password'
+    "Incorrect username or password",
   );
 });

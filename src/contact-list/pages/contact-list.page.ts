@@ -1,17 +1,17 @@
-import { expect, type Locator, type Page } from '@playwright/test';
-import type { ContactData } from '../models/contact';
+import { expect, type Locator, type Page } from "@playwright/test";
+import type { ContactData } from "../models/contact";
 
 export class ContactListPage {
   readonly contactListHeading: Locator;
   private readonly addContactButton: Locator;
 
   constructor(private readonly page: Page) {
-    this.contactListHeading = page.getByRole('heading', {
-      name: 'Contact List',
-      exact: true
+    this.contactListHeading = page.getByRole("heading", {
+      name: "Contact List",
+      exact: true,
     });
-    this.addContactButton = page.getByRole('button', {
-      name: 'Add a New Contact'
+    this.addContactButton = page.getByRole("button", {
+      name: "Add a New Contact",
     });
   }
 
@@ -21,7 +21,7 @@ export class ContactListPage {
   }
 
   async navigate(): Promise<void> {
-    await this.page.goto('/contactList');
+    await this.page.goto("/contactList");
     await this.waitForLoaded();
   }
 
@@ -34,9 +34,9 @@ export class ContactListPage {
   }
 
   contactCell(contact: ContactData): Locator {
-    return this.page.getByRole('cell', {
+    return this.page.getByRole("cell", {
       name: `${contact.firstName} ${contact.lastName}`,
-      exact: true
+      exact: true,
     });
   }
 }

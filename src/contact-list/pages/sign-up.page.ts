@@ -1,5 +1,5 @@
-import { expect, type Locator, type Page } from '@playwright/test';
-import type { TestUserData } from '../models/test-user';
+import { expect, type Locator, type Page } from "@playwright/test";
+import type { TestUserData } from "../models/test-user";
 
 export class SignUpPage {
   private readonly signUpHeading: Locator;
@@ -10,19 +10,19 @@ export class SignUpPage {
   private readonly submitButton: Locator;
 
   constructor(private readonly page: Page) {
-    this.signUpHeading = page.getByRole('heading', {
-      name: 'Add User',
-      exact: true
+    this.signUpHeading = page.getByRole("heading", {
+      name: "Add User",
+      exact: true,
     });
-    this.firstNameField = page.getByPlaceholder('First Name');
-    this.lastNameField = page.getByPlaceholder('Last Name');
-    this.emailField = page.getByPlaceholder('Email');
-    this.passwordField = page.locator('#password');
-    this.submitButton = page.getByRole('button', { name: 'Submit' });
+    this.firstNameField = page.getByPlaceholder("First Name");
+    this.lastNameField = page.getByPlaceholder("Last Name");
+    this.emailField = page.getByPlaceholder("Email");
+    this.passwordField = page.locator("#password");
+    this.submitButton = page.getByRole("button", { name: "Submit" });
   }
 
   async waitForLoaded(): Promise<void> {
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState("domcontentloaded");
     await expect(this.page).toHaveURL(/\/addUser/);
     await expect(this.signUpHeading).toBeVisible();
   }

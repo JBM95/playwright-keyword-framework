@@ -25,11 +25,15 @@ jobs:
 
       - run: npm ci
 
+      - run: npm run typecheck
+
+      - run: npm run lint
+
+      - run: npm run format:check
+
       - name: Install Chromium
         if: github.event_name == 'push'
         run: npx playwright install --with-deps chromium
-
-      - run: npm run typecheck
 
       - name: Run Playwright tests
         if: github.event_name == 'push'

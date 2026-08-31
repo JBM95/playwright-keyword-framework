@@ -116,10 +116,16 @@ Never commit `.env`, bearer tokens, or generated browser authentication state. T
 npm test                      # full Contact List suite
 npm run test:contact-list:ui  # Contact List UI specs
 npm run typecheck             # TypeScript validation
+npm run lint                  # ESLint code-quality rules
+npm run lint:fix              # fix ESLint issues where safe
+npm run format                # apply Prettier formatting
+npm run format:check          # check Prettier formatting
 npm run test:headed           # run with a visible browser
 npm run test:ui               # Playwright UI mode
 npm run report                # open the latest HTML report
 ```
+
+TypeScript provides type safety, ESLint checks code quality, and Prettier keeps formatting consistent.
 
 The current suite covers:
 
@@ -142,7 +148,7 @@ This prevents shared setup from replacing the actual login tests and avoids coup
 
 GitHub Actions runs on pushes and pull requests targeting `master`.
 
-- Pull requests run dependency installation and TypeScript validation without repository secrets.
+- Pull requests run dependency installation, type checking, linting, and format checking without repository secrets.
 - Trusted pushes to `master` additionally install Chromium, run the full Playwright suite, and upload the HTML report.
 - Contact List credentials are supplied through GitHub Actions Secrets only to the Playwright test step.
 - GitHub Actions are pinned to immutable commit SHAs, repository token permissions are read-only, checkout credentials are not persisted, and the job has a 20-minute timeout.

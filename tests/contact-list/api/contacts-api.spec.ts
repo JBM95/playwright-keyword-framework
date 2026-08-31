@@ -1,10 +1,10 @@
-import { expect } from '@playwright/test';
-import { type ContactData } from '../../../src/contact-list/models/contact';
-import { type ContactResponse } from '../../../src/contact-list/models/contact-response';
-import { createContact } from '../data/contact.factory';
-import { test } from '../fixtures/contact-list.fixture';
+import { expect } from "@playwright/test";
+import { type ContactData } from "../../../src/contact-list/models/contact";
+import { type ContactResponse } from "../../../src/contact-list/models/contact-response";
+import { createContact } from "../data/contact.factory";
+import { test } from "../fixtures/contact-list.fixture";
 
-test('creates and retrieves a persisted contact', async ({ contactsApi }) => {
+test("creates and retrieves a persisted contact", async ({ contactsApi }) => {
   const contact = createContact();
   let contactId: string | undefined;
 
@@ -33,12 +33,12 @@ test('creates and retrieves a persisted contact', async ({ contactsApi }) => {
   }
 });
 
-test('updates a persisted contact', async ({ contactsApi }) => {
+test("updates a persisted contact", async ({ contactsApi }) => {
   const contact = createContact();
   const updatedContact: ContactData = createContact({
-    firstName: 'Updated',
-    lastName: 'Updated Contact',
-    city: 'Johannesburg'
+    firstName: "Updated",
+    lastName: "Updated Contact",
+    city: "Johannesburg",
   });
   let contactId: string | undefined;
 
@@ -52,7 +52,7 @@ test('updates a persisted contact', async ({ contactsApi }) => {
 
     const updateResponse = await contactsApi.updateContact(
       contactId,
-      updatedContact
+      updatedContact,
     );
 
     expect(updateResponse.status()).toBe(200);
@@ -75,7 +75,7 @@ test('updates a persisted contact', async ({ contactsApi }) => {
   }
 });
 
-test('deletes a persisted contact', async ({ contactsApi }) => {
+test("deletes a persisted contact", async ({ contactsApi }) => {
   const contact = createContact();
   let contactId: string | undefined;
   let contactDeleted = false;
@@ -92,7 +92,7 @@ test('deletes a persisted contact', async ({ contactsApi }) => {
     contactDeleted = deleteResponse.ok();
 
     expect(deleteResponse.status()).toBe(200);
-    expect(await deleteResponse.text()).toBe('Contact deleted');
+    expect(await deleteResponse.text()).toBe("Contact deleted");
 
     const getContactsResponse = await contactsApi.getContacts();
 
