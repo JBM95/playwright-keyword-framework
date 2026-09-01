@@ -255,6 +255,8 @@ API scenarios prove authenticated HTTP behaviour and persisted CRUD:
 
 The framework deliberately does not duplicate every API contract through the browser.
 
+Both kinds of scenario are written as Arrange, Act, Assert, with cleanup kept separate in `finally`. This is a readability convention for the specs only: scenario data, recorded IDs, cleanup decisions and final assertions stay in the test, and no assertion or lifecycle abstraction is introduced to enforce the shape. `docs/adding-a-test.md` describes the convention.
+
 ### API setup and cleanup in UI tests
 
 API calls are allowed inside UI scenarios only when they support the scenario rather than replace the behaviour being tested.

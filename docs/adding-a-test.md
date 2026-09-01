@@ -2,6 +2,46 @@
 
 Use this guide when adding or extending automation. The existing edit-contact scenario is the reference example because it shows test data, API setup, UI behaviour, keywords, page objects, assertions, and cleanup in one flow.
 
+## Test structure convention
+
+Specs follow Arrange, Act, Assert, with cleanup kept separate:
+
+```text
+Arrange
+→ establish independent data and prerequisite state
+
+Act
+→ execute the behaviour under test through the appropriate layer
+
+Assert
+→ keep scenario-level verification visible in the spec
+
+Cleanup
+→ remove persisted state in `finally` where practical
+```
+
+Mark the phases with lightweight comments where they help a reader follow the scenario:
+
+```ts
+// Arrange
+const { email, password } = contactListConfig.testUser;
+
+// Act
+await authenticationKeywords.loginAs(email, password);
+
+// Assert
+await expect(contactListPage.contactListHeading).toBeVisible();
+```
+
+Some points worth knowing:
+
+- Arrange can continue inside the `try` block when the prerequisite is created through the API, because the created data must be cleaned up if the scenario fails.
+- Cleanup is not part of AAA. It lives in `finally` so it still runs after a failed assertion.
+- Proving persisted or visible state often needs an interaction during Assert, such as opening a saved contact or issuing a `GET` after an update. That is still Assert, not a second Act.
+- Do not add a marker for a phase that does not exist, and do not add markers to a short test that already reads clearly.
+
+Use AAA as a readability convention, not as a reason to hide scenario intent or create unnecessary abstractions. Generated data, recorded IDs, `try/finally` cleanup and the assertions themselves stay in the spec.
+
 ## Worked example: edit an existing contact
 
 Requirement:
@@ -22,7 +62,7 @@ UI assert updated values
 API cleanup in finally
 ```
 
-### 1. Generate scenario data
+### 1. Generate scenario data (Arrange)
 
 Use the typed factory in `tests/contact-list/data/contact.factory.ts`:
 
@@ -38,7 +78,7 @@ const updatedContact = createContact({
 
 Factories should create complete valid data, allow focused overrides, and generate unique persisted values where needed.
 
-### 2. Create the prerequisite through the API
+### 2. Create the prerequisite through the API (Arrange)
 
 The fixture provides `contactsApi`:
 
@@ -52,7 +92,7 @@ contactId = createdContact._id;
 
 Keep the returned ID so the scenario can clean up its own data.
 
-### 3. Perform the behaviour through the UI
+### 3. Perform the behaviour through the UI (Act)
 
 The test calls the domain action:
 
@@ -72,7 +112,7 @@ ContactListPage
 
 Locators and browser mechanics stay in those page objects. The keyword describes the meaningful product action.
 
-### 4. Assert the visible result in the spec
+### 4. Assert the visible result in the spec (Assert)
 
 The page object exposes the observable field, while the test decides what value proves the scenario:
 
@@ -82,7 +122,7 @@ await expect(contactDetailsPage.contactField(field)).toHaveText(value);
 
 Final scenario assertions belong in the spec.
 
-### 5. Clean up persisted data
+### 5. Clean up persisted data (Cleanup)
 
 Use `finally` so cleanup still runs after a failed assertion:
 

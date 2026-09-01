@@ -5,12 +5,15 @@ import { createContact } from "../data/contact.factory";
 import { test } from "../fixtures/contact-list.fixture";
 
 test("creates and retrieves a persisted contact", async ({ contactsApi }) => {
+  // Arrange
   const contact = createContact();
   let contactId: string | undefined;
 
   try {
+    // Act
     const createResponse = await contactsApi.createContact(contact);
 
+    // Assert: the create response, then the persisted contact
     expect(createResponse.status()).toBe(201);
 
     const createdContact = (await createResponse.json()) as ContactResponse;
@@ -27,6 +30,7 @@ test("creates and retrieves a persisted contact", async ({ contactsApi }) => {
 
     expect(persistedContact).toMatchObject({ ...contact });
   } finally {
+    // Cleanup
     if (contactId) {
       await contactsApi.deleteContact(contactId);
     }
@@ -34,6 +38,7 @@ test("creates and retrieves a persisted contact", async ({ contactsApi }) => {
 });
 
 test("updates a persisted contact", async ({ contactsApi }) => {
+  // Arrange
   const contact = createContact();
   const updatedContact: ContactData = createContact({
     firstName: "Updated",
@@ -43,6 +48,7 @@ test("updates a persisted contact", async ({ contactsApi }) => {
   let contactId: string | undefined;
 
   try {
+    // Arrange: create the contact to update
     const createResponse = await contactsApi.createContact(contact);
 
     expect(createResponse.status()).toBe(201);
@@ -50,11 +56,13 @@ test("updates a persisted contact", async ({ contactsApi }) => {
     const createdContact = (await createResponse.json()) as ContactResponse;
     contactId = createdContact._id;
 
+    // Act
     const updateResponse = await contactsApi.updateContact(
       contactId,
       updatedContact,
     );
 
+    // Assert: the update response, then the persisted values
     expect(updateResponse.status()).toBe(200);
 
     const returnedContact = (await updateResponse.json()) as ContactResponse;
@@ -69,6 +77,7 @@ test("updates a persisted contact", async ({ contactsApi }) => {
 
     expect(persistedContact).toMatchObject({ ...updatedContact });
   } finally {
+    // Cleanup
     if (contactId) {
       await contactsApi.deleteContact(contactId);
     }
@@ -76,11 +85,13 @@ test("updates a persisted contact", async ({ contactsApi }) => {
 });
 
 test("deletes a persisted contact", async ({ contactsApi }) => {
+  // Arrange
   const contact = createContact();
   let contactId: string | undefined;
   let contactDeleted = false;
 
   try {
+    // Arrange: create the contact to delete
     const createResponse = await contactsApi.createContact(contact);
 
     expect(createResponse.status()).toBe(201);
@@ -88,9 +99,11 @@ test("deletes a persisted contact", async ({ contactsApi }) => {
     const createdContact = (await createResponse.json()) as ContactResponse;
     contactId = createdContact._id;
 
+    // Act
     const deleteResponse = await contactsApi.deleteContact(contactId);
     contactDeleted = deleteResponse.ok();
 
+    // Assert: the delete response, then the absence of the contact
     expect(deleteResponse.status()).toBe(200);
     expect(await deleteResponse.text()).toBe("Contact deleted");
 
@@ -102,6 +115,7 @@ test("deletes a persisted contact", async ({ contactsApi }) => {
 
     expect(contacts.some((contact) => contact._id === contactId)).toBe(false);
   } finally {
+    // Cleanup: only needed when the delete request did not succeed
     if (contactId && !contactDeleted) {
       await contactsApi.deleteContact(contactId);
     }

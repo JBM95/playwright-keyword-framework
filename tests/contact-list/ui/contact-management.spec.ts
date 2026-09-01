@@ -10,12 +10,15 @@ test("adds a contact and displays saved details", async ({
   contactListPage,
   contactsApi,
 }) => {
+  // Arrange
   const contact = createContact();
 
   try {
+    // Act
     await contactListPage.navigate();
     await contactKeywords.addContact(contact);
 
+    // Assert: the contact appears, and the saved details are visible
     await expect(contactListPage.contactCell(contact)).toBeVisible();
 
     await contactKeywords.openContact(contact);
@@ -27,6 +30,7 @@ test("adds a contact and displays saved details", async ({
       await expect(contactDetailsPage.contactField(field)).toHaveText(value);
     }
   } finally {
+    // Cleanup: find the UI-created contact and delete it through the API
     const contactsResponse = await contactsApi.getContacts();
 
     if (contactsResponse.ok()) {
@@ -48,6 +52,7 @@ test("edits an existing contact", async ({
   contactListPage,
   contactsApi,
 }) => {
+  // Arrange
   const contact = createContact();
   const updatedContact = createContact({
     firstName: "Updated",
@@ -57,6 +62,7 @@ test("edits an existing contact", async ({
   let contactId: string | undefined;
 
   try {
+    // Arrange: create the contact to edit through the API
     const createResponse = await contactsApi.createContact(contact);
 
     expect(createResponse.status()).toBe(201);
@@ -64,9 +70,11 @@ test("edits an existing contact", async ({
     const createdContact = (await createResponse.json()) as ContactResponse;
     contactId = createdContact._id;
 
+    // Act
     await contactListPage.navigate();
     await contactKeywords.updateContact(contact, updatedContact);
 
+    // Assert
     for (const [field, value] of Object.entries(updatedContact) as [
       keyof ContactData,
       string,
@@ -74,6 +82,7 @@ test("edits an existing contact", async ({
       await expect(contactDetailsPage.contactField(field)).toHaveText(value);
     }
   } finally {
+    // Cleanup
     if (contactId) {
       await contactsApi.deleteContact(contactId);
     }
@@ -85,11 +94,13 @@ test("deletes an existing contact", async ({
   contactListPage,
   contactsApi,
 }) => {
+  // Arrange
   const contact = createContact();
   let contactId: string | undefined;
   let deletionCompleted = false;
 
   try {
+    // Arrange: create the contact to delete through the API
     const createResponse = await contactsApi.createContact(contact);
 
     expect(createResponse.status()).toBe(201);
@@ -97,12 +108,15 @@ test("deletes an existing contact", async ({
     const createdContact = (await createResponse.json()) as ContactResponse;
     contactId = createdContact._id;
 
+    // Act
     await contactListPage.navigate();
     await contactKeywords.deleteContact(contact);
     deletionCompleted = true;
 
+    // Assert
     await expect(contactListPage.contactCell(contact)).toBeHidden();
   } finally {
+    // Cleanup: only needed when the UI deletion did not complete
     if (contactId && !deletionCompleted) {
       await contactsApi.deleteContact(contactId);
     }
