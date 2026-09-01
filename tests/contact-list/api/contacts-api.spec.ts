@@ -32,7 +32,14 @@ test("creates and retrieves a persisted contact", async ({ contactsApi }) => {
   } finally {
     // Cleanup
     if (contactId) {
-      await contactsApi.deleteContact(contactId);
+      const deleteResponse = await contactsApi.deleteContact(contactId);
+
+      expect
+        .soft(
+          deleteResponse.status(),
+          `Failed to clean up contact ${contactId}`,
+        )
+        .toBe(200);
     }
   }
 });
@@ -79,7 +86,14 @@ test("updates a persisted contact", async ({ contactsApi }) => {
   } finally {
     // Cleanup
     if (contactId) {
-      await contactsApi.deleteContact(contactId);
+      const deleteResponse = await contactsApi.deleteContact(contactId);
+
+      expect
+        .soft(
+          deleteResponse.status(),
+          `Failed to clean up contact ${contactId}`,
+        )
+        .toBe(200);
     }
   }
 });
@@ -117,7 +131,14 @@ test("deletes a persisted contact", async ({ contactsApi }) => {
   } finally {
     // Cleanup: only needed when the delete request did not succeed
     if (contactId && !contactDeleted) {
-      await contactsApi.deleteContact(contactId);
+      const cleanupResponse = await contactsApi.deleteContact(contactId);
+
+      expect
+        .soft(
+          cleanupResponse.status(),
+          `Failed to clean up contact ${contactId}`,
+        )
+        .toBe(200);
     }
   }
 });

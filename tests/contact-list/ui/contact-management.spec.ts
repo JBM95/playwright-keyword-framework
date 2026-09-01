@@ -33,6 +33,13 @@ test("adds a contact and displays saved details", async ({
     // Cleanup: find the UI-created contact and delete it through the API
     const contactsResponse = await contactsApi.getContacts();
 
+    expect
+      .soft(
+        contactsResponse.status(),
+        `Failed to list contacts to clean up ${contact.email}`,
+      )
+      .toBe(200);
+
     if (contactsResponse.ok()) {
       const contacts = (await contactsResponse.json()) as ContactResponse[];
       const createdContact = contacts.find(
@@ -40,7 +47,16 @@ test("adds a contact and displays saved details", async ({
       );
 
       if (createdContact) {
-        await contactsApi.deleteContact(createdContact._id);
+        const deleteResponse = await contactsApi.deleteContact(
+          createdContact._id,
+        );
+
+        expect
+          .soft(
+            deleteResponse.status(),
+            `Failed to clean up contact ${createdContact._id}`,
+          )
+          .toBe(200);
       }
     }
   }
@@ -84,7 +100,14 @@ test("edits an existing contact", async ({
   } finally {
     // Cleanup
     if (contactId) {
-      await contactsApi.deleteContact(contactId);
+      const deleteResponse = await contactsApi.deleteContact(contactId);
+
+      expect
+        .soft(
+          deleteResponse.status(),
+          `Failed to clean up contact ${contactId}`,
+        )
+        .toBe(200);
     }
   }
 });
@@ -118,7 +141,14 @@ test("deletes an existing contact", async ({
   } finally {
     // Cleanup: only needed when the UI deletion did not complete
     if (contactId && !deletionCompleted) {
-      await contactsApi.deleteContact(contactId);
+      const deleteResponse = await contactsApi.deleteContact(contactId);
+
+      expect
+        .soft(
+          deleteResponse.status(),
+          `Failed to clean up contact ${contactId}`,
+        )
+        .toBe(200);
     }
   }
 });

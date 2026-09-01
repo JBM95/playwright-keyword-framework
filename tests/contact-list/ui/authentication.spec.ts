@@ -30,7 +30,12 @@ test("registers a new user successfully", async ({
       const usersApi = new UsersApiClient(request, token);
       const deleteResponse = await usersApi.deleteCurrentUser();
 
-      expect(deleteResponse.status()).toBe(200);
+      expect
+        .soft(
+          deleteResponse.status(),
+          `Failed to clean up registered user ${user.email}`,
+        )
+        .toBe(200);
     }
   }
 });
