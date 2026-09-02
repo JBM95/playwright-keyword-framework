@@ -46,6 +46,10 @@ export class EditContactPage {
   async waitForLoaded(): Promise<void> {
     await this.page.waitForLoadState("domcontentloaded");
     await expect(this.editContactHeading).toBeVisible();
+    // The heading is static markup, so it is visible before the page has
+    // fetched the contact and populated the form. Wait for the populated
+    // values, otherwise filling the form races that population.
+    await expect(this.firstNameField).not.toHaveValue("");
   }
 
   async fillContact(contact: ContactData): Promise<void> {
