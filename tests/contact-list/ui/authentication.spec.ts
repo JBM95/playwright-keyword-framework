@@ -58,11 +58,13 @@ test("rejects invalid credentials", async ({
   loginPage,
   authenticationKeywords,
 }) => {
+  // Act
   await authenticationKeywords.loginAs(
     "invalid.user@example.test",
     "not-a-real-password",
   );
 
+  // Assert
   await expect(loginPage.errorMessage).toHaveText(
     "Incorrect username or password",
   );

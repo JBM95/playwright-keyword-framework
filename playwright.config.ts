@@ -24,7 +24,8 @@ export default defineConfig({
       testDir: "./tests/contact-list",
       testIgnore: /[\\/]setup[\\/]/,
       dependencies: ["contact-list-setup"],
-      // The Contact List demo uses one shared account, whose API rejects concurrent logins.
+      // The Contact List demo uses one shared account, and concurrent
+      // authentication for it has proved unreliable against the external SUT.
       workers: 1,
       use: {
         ...devices["Desktop Chrome"],

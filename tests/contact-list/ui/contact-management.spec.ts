@@ -18,11 +18,13 @@ test("adds a contact and displays saved details", async ({
     await contactListPage.navigate();
     await contactKeywords.addContact(contact);
 
-    // Assert: the contact appears, and the saved details are visible
+    // Assert: the contact appears in the list
     await expect(contactListPage.contactCell(contact)).toBeVisible();
 
+    // Act: open the saved contact
     await contactKeywords.openContact(contact);
 
+    // Assert: the saved details are displayed
     for (const [field, value] of Object.entries(contact) as [
       keyof ContactData,
       string,
@@ -139,7 +141,7 @@ test("deletes an existing contact", async ({
     // Assert
     await expect(contactListPage.contactCell(contact)).toBeHidden();
   } finally {
-    // Cleanup: only needed when the UI deletion did not complete
+    // Cleanup: only needed when the UI delete steps did not run
     if (contactId && !deletionCompleted) {
       const deleteResponse = await contactsApi.deleteContact(contactId);
 
