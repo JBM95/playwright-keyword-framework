@@ -409,12 +409,14 @@ Allure was deliberately excluded because Playwright's native reporting already s
 
 ### Verified CI evidence
 
-Verified hardened implementation run:
+Verified run of the completed framework and test implementation:
 
-- [GitHub Actions run #3](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33306686692)
-- [Playwright report artifact](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33306686692/artifacts/9730698526)
+- [GitHub Actions run](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33734427245)
+- [Playwright report artifact](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33734427245/artifacts/9885167568)
 
-The run completed successfully against commit `6d9426e` and published the `playwright-report` artifact.
+The run completed successfully against commit `bf3cce0`. Every step passed —
+typecheck, lint, format check, and the full suite of 12 tests with no retries
+or skips — and it published the `playwright-report` artifact.
 
 ## 13. Adding another product
 

@@ -157,8 +157,11 @@ GitHub Actions runs on pushes and pull requests targeting `master`.
 
 Verified CI evidence:
 
-- [Green GitHub Actions run #5](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33308629603)
-- [Playwright HTML report artifact](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33308629603/artifacts/9731281164)
+- [Green GitHub Actions run](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33734427245)
+- [Playwright HTML report artifact](https://github.com/JBM95/playwright-keyword-framework/actions/runs/33734427245/artifacts/9885167568)
+
+This run validated commit `bf3cce0`. All steps passed, and the full suite
+of 12 tests passed with no retries or skips.
 
 ## Extending the framework
 
