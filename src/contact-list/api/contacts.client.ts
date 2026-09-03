@@ -4,11 +4,14 @@ import type { ContactData } from "../models/contact";
 export class ContactsApiClient {
   private readonly headers: Record<string, string>;
 
+  // The token is optional so the scenario that proves the API refuses
+  // unauthenticated access can still go through this client rather than
+  // issuing raw HTTP from the spec.
   constructor(
     private readonly request: APIRequestContext,
-    token: string,
+    token?: string,
   ) {
-    this.headers = { Authorization: `Bearer ${token}` };
+    this.headers = token ? { Authorization: `Bearer ${token}` } : {};
   }
 
   async createContact(contact: ContactData): Promise<APIResponse> {

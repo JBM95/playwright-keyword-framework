@@ -1,6 +1,7 @@
 import { expect } from "@playwright/test";
 import { type ContactData } from "../../../src/contact-list/models/contact";
 import { type ContactResponse } from "../../../src/contact-list/models/contact-response";
+import { type ValidationErrorResponse } from "../../../src/contact-list/models/validation-error";
 import { createContact } from "../data/contact.factory";
 import { test } from "../fixtures/contact-list.fixture";
 
@@ -20,6 +21,8 @@ test("creates and retrieves a persisted contact", async ({ contactsApi }) => {
     contactId = createdContact._id;
 
     expect(contactId).toBeTruthy();
+    // The spread is required: toMatchObject needs an index-signature type,
+    // which the ContactData interface does not provide on its own.
     expect(createdContact).toMatchObject({ ...contact });
 
     const getResponse = await contactsApi.getContact(contactId);
@@ -117,17 +120,13 @@ test("deletes a persisted contact", async ({ contactsApi }) => {
     const deleteResponse = await contactsApi.deleteContact(contactId);
     contactDeleted = deleteResponse.ok();
 
-    // Assert: the delete response, then the absence of the contact
+    // Assert: the delete response, then that the contact is gone
     expect(deleteResponse.status()).toBe(200);
     expect(await deleteResponse.text()).toBe("Contact deleted");
 
-    const getContactsResponse = await contactsApi.getContacts();
+    const getResponse = await contactsApi.getContact(contactId);
 
-    expect(getContactsResponse.status()).toBe(200);
-
-    const contacts = (await getContactsResponse.json()) as ContactResponse[];
-
-    expect(contacts.some((contact) => contact._id === contactId)).toBe(false);
+    expect(getResponse.status()).toBe(404);
   } finally {
     // Cleanup: only needed when the delete request did not succeed
     if (contactId && !contactDeleted) {
@@ -141,4 +140,35 @@ test("deletes a persisted contact", async ({ contactsApi }) => {
         .toBe(200);
     }
   }
+});
+
+test("rejects an unauthenticated contacts request", async ({
+  unauthenticatedContactsApi,
+}) => {
+  // Act
+  const response = await unauthenticatedContactsApi.getContacts();
+
+  // Assert
+  expect(response.status()).toBe(401);
+
+  const body = (await response.json()) as { error: string };
+
+  expect(body.error).toBe("Please authenticate.");
+});
+
+test("rejects a contact with an invalid email address", async ({
+  contactsApi,
+}) => {
+  // Arrange
+  const contact = createContact({ email: "not-an-email" });
+
+  // Act
+  const response = await contactsApi.createContact(contact);
+
+  // Assert: nothing is persisted, so this scenario needs no cleanup
+  expect(response.status()).toBe(400);
+
+  const body = (await response.json()) as ValidationErrorResponse;
+
+  expect(body.errors.email.message).toBe("Email is invalid");
 });

@@ -57,6 +57,7 @@ test("logs in with valid credentials", async ({
 test("rejects invalid credentials", async ({
   loginPage,
   authenticationKeywords,
+  contactListPage,
 }) => {
   // Act
   await authenticationKeywords.loginAs(
@@ -64,8 +65,9 @@ test("rejects invalid credentials", async ({
     "not-a-real-password",
   );
 
-  // Assert
+  // Assert: the error is shown and the user is not signed in
   await expect(loginPage.errorMessage).toHaveText(
     "Incorrect username or password",
   );
+  await expect(contactListPage.contactListHeading).toBeHidden();
 });

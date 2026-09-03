@@ -20,6 +20,7 @@ type ContactListFixtures = {
   contactKeywords: ContactManagementKeywords;
   authApi: AuthApiClient;
   contactsApi: ContactsApiClient;
+  unauthenticatedContactsApi: ContactsApiClient;
 };
 
 export const test = base.extend<ContactListFixtures>({
@@ -67,5 +68,10 @@ export const test = base.extend<ContactListFixtures>({
     const token = await authApi.login(email, password);
 
     await use(new ContactsApiClient(request, token));
+  },
+  // Built without a token so scenarios can prove the API refuses
+  // unauthenticated requests.
+  unauthenticatedContactsApi: async ({ request }, use) => {
+    await use(new ContactsApiClient(request));
   },
 });
