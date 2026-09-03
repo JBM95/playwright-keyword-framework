@@ -129,10 +129,16 @@ Use `finally` so cleanup still runs after a failed assertion:
 ```ts
 finally {
   if (contactId) {
-    await contactsApi.deleteContact(contactId);
+    const deleteResponse = await contactsApi.deleteContact(contactId);
+
+    expect
+      .soft(deleteResponse.status(), `Failed to clean up contact ${contactId}`)
+      .toBe(200);
   }
 }
 ```
+
+Assert the cleanup response with `expect.soft`. A silent cleanup that fails leaves data behind and nobody finds out; a soft assertion reports it without masking the real reason the scenario failed.
 
 The complete path is:
 
@@ -213,6 +219,15 @@ create prerequisite
 → assert persisted values
 → cleanup
 ```
+
+Cover the rule as well as the happy path. A CRUD test that always sends a valid token and valid data would still pass if authentication or validation were removed, so the suite also proves the API refuses bad input:
+
+```text
+unauthenticated GET  → 401
+invalid email POST   → 400 + field-level message
+```
+
+The fixture provides `unauthenticatedContactsApi` for the first case, so the request still goes through the API client rather than raw HTTP in the spec. Add one representative negative case per rule; do not build an exhaustive validation matrix.
 
 API specs live under `tests/contact-list/api/`.
 

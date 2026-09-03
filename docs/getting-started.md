@@ -82,7 +82,7 @@ The GitHub Actions workflow intentionally has two trust levels.
 ### Pull requests to `master`
 
 ```text
-checkout → Node setup → npm ci → typecheck
+checkout → Node setup → npm ci → typecheck → lint → format check
 ```
 
 Secret-backed browser tests do not run from pull-request-controlled code.
@@ -94,6 +94,8 @@ checkout
 → Node setup
 → npm ci
 → typecheck
+→ lint
+→ format check
 → install Chromium + dependencies
 → npm test
 → upload Playwright HTML report
@@ -109,6 +111,8 @@ Run:
 
 ```bash
 npm run typecheck
+npm run lint
+npm run format:check
 ```
 
 and, where credentials and environment access are available:

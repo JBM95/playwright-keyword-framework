@@ -251,7 +251,14 @@ API scenarios prove authenticated HTTP behaviour and persisted CRUD:
 
 - create and retrieve a persisted contact;
 - update and retrieve persisted values;
-- delete and verify absence.
+- delete and verify the resource returns 404.
+
+Two negative scenarios sit alongside the CRUD happy path:
+
+- an unauthenticated `GET /contacts` is refused with 401;
+- a contact with an invalid email address is refused with 400 and a field-level validation message.
+
+These exist because the happy-path CRUD tests all carry a valid token and valid data, so on their own they would still pass if authentication or validation were removed from the API. One representative case of each is enough to prove the rule is enforced; see section 14 for why a full validation matrix was not added.
 
 The framework deliberately does not duplicate every API contract through the browser.
 
@@ -360,6 +367,8 @@ checkout
 → setup Node
 → npm ci
 → typecheck
+→ lint
+→ format check
 ```
 
 Secret-backed E2E execution is not run from pull-request-controlled code.
@@ -371,6 +380,8 @@ checkout
 → setup Node 24
 → npm ci
 → typecheck
+→ lint
+→ format check
 → install Chromium + OS dependencies
 → npm test
 → upload Playwright HTML report

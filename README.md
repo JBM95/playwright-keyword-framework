@@ -132,6 +132,7 @@ The current suite covers:
 - UI registration, valid login, and invalid login;
 - UI contact create, edit, and delete behaviour;
 - API contact create/read, update, and delete behaviour;
+- API rejection of unauthenticated requests and of invalid contact data;
 - UI authentication setup used by non-login browser tests.
 
 ## Authentication
