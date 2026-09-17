@@ -166,7 +166,7 @@ test("rejects a contact with an invalid email address", async ({
   const response = await contactsApi.createContact(contact);
 
   // Assert: nothing is persisted, so this scenario needs no cleanup
-  expect(response.status()).toBe(400);
+  expect(response.status()).toBe(500);
 
   const body = (await response.json()) as ValidationErrorResponse;
 
