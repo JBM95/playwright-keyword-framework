@@ -2,7 +2,9 @@ name: Playwright
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
+      - ci-failure-demo
   pull_request:
     branches: [master]
 
